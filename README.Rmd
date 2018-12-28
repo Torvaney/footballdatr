@@ -1,0 +1,36 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# footballdatr
+
+The goal of footballdatr is to enable easy use of football-data.co.uk data within R.
+
+## Installation
+
+You can install the footballdatr from Github with:
+
+``` r
+devtools::install_github("torvaney/footballdatr")
+```
+
+## Example
+
+To download Premier League data for the 2018/19 season:
+
+```{r example}
+footballdatr::fetch_data("England", 0, 2018)
+```

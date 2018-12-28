@@ -1,0 +1,28 @@
+Package: footballdatr
+Title: Fetch Data From football-data.co.uk
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Ben",
+           family = "Torvaney",
+           role = c("aut", "cre"),
+           email = "torvaney@protonmail.com")
+Description: 
+  An tidyverse-friendly package for fetching data from football-data.co.uk for 
+  soccer modelling.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends:
+  R (>= 3.3)
+Imports:
+    glue,
+    magrittr,
+    readr,
+    dplyr,
+    tidyr,
+    rlang,
+    memoise,
+    lubridate
+Remotes:
+    r-lib/memoise
+RoxygenNote: 6.1.1
