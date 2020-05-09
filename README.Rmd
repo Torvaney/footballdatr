@@ -32,5 +32,16 @@ devtools::install_github("torvaney/footballdatr")
 To download Premier League data for the 2018/19 season:
 
 ```{r example}
-footballdatr::fetch_data("England", 0, 2018)
+footballdatr::fetch_data(
+  "England",  # Country
+  0,          # Division tier (0 = highest)
+  2018        # Season (start year)
+)
 ```
+
+To view the available competitions
+
+```{r}
+footballdatr::ls_countries()
+```
+
