@@ -4,7 +4,9 @@
 \name{colname_map}
 \alias{colname_map}
 \title{Map for selecting and renaming foorball-data.co.uk columns}
-\format{An object of class \code{list} of length 25.}
+\format{
+An object of class \code{list} of length 26.
+}
 \usage{
 colname_map
 }

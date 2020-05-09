@@ -1,6 +1,6 @@
 Package: footballdatr
 Title: Fetch Data From football-data.co.uk
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: 
     person(given = "Ben",
            family = "Torvaney",
@@ -25,4 +25,4 @@ Imports:
     lubridate
 Remotes:
     r-lib/memoise
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

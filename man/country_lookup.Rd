@@ -4,7 +4,9 @@
 \name{country_lookup}
 \alias{country_lookup}
 \title{Lookup football-data.co.uk country codes by name}
-\format{An object of class \code{list} of length 10.}
+\format{
+An object of class \code{list} of length 10.
+}
 \usage{
 country_lookup
 }

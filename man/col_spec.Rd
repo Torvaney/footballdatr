@@ -4,7 +4,9 @@
 \name{col_spec}
 \alias{col_spec}
 \title{Column specification for football-data.co.uk csv files}
-\format{An object of class \code{col_spec} of length 2.}
+\format{
+An object of class \code{col_spec} of length 2.
+}
 \usage{
 col_spec
 }
