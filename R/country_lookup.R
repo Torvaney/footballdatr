@@ -21,3 +21,22 @@ country_lookup <- list(
   spain    = "SP",
   turkey   = "T"
 )
+
+#' Lookup alternative football-data.co.uk country codes by name
+#' @keywords internal
+alt_country_lookup <- list(
+  argentina  = "ARG",
+  austria    = "AUT",
+  brazil     = "BRA",
+  china      = "CHN",
+  denmark    = "DNK",
+  finland    = "FIN",
+  ireland    = "IRL",
+  japan      = "JPN",
+  mexico     = "MEX",
+  norway     = "NOR",
+  poland     = "POL",
+  romania    = "ROU",
+  russia     = "RUS",
+  sweden     = "SWE"
+)
