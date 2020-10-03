@@ -25,4 +25,4 @@ Imports:
     lubridate
 Remotes:
     r-lib/memoise
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
