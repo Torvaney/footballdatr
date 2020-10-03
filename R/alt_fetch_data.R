@@ -15,8 +15,6 @@ alt_football_data_url <- function(country) {
 #' alt_fetch_data("Denmark", 2014)
 #'
 #' @importFrom magrittr %>%
-#'
-#' @export
 alt_fetch_data <- memoise::memoise(function(country, season) {
   #Select which source to read from based on which the country appears in
   data <- alt_football_data_url(country) %>%

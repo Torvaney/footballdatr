@@ -16,17 +16,40 @@
 #' # Fetching Championship data
 #' fetch_data("England", 1, 2014)
 #'
-#' # Fetching Serie A data
-#' fetch_data("Italy", 1, 2014)
+#' # Fetching Danish data for 2014
+#' fetch_data("Denmark", 1, 2014)
 #'
 #' @importFrom magrittr %>%
 #'
 #' @export
 fetch_data <- memoise::memoise(function(country, division, season) {
-#Select which source to read from based on which the country appears in
+#Select which source to read from based on which list the country appears in
+if(tolower(country) %in% names(country_lookup)){
+  prime_fetch_data(country, division, season)
+}else {
+  alt_fetch_data(country, season)
+}
+})
+
+#' Fetch data for a single league and season from the main list of countries
+#'
+#' @param country  The country of the league of interest
+#' @param division An integer denoting the division of interest, where lower numbers refer
+#'   to higher divisions. English and Scottish Premierships are `0`, while all other
+#'   top divisions (e.g. La Liga) are `1`.
+#' @param season   The start-year of the season
+#'
+#' @examples
+#'
+#' # Fetching Premier League data for 2014/15 season
+#' prime_fetch_data("England", 0, 2014)
+#'
+#' @importFrom magrittr %>%
+prime_fetch_data <- memoise::memoise(function(country, division, season) {
+  #Select which source to read from based on which the country appears in
   data <- football_data_url(country, division, season) %>%
-   data.table::fread(fill = TRUE) %>%
-  #Select columns that exist from data table of options
+    data.table::fread(fill = TRUE) %>%
+    #Select columns that exist from data table of options
     dplyr::select(tidyselect::any_of(colname_map$cols)) %>%
     dplyr::mutate(Date = lubridate::dmy(Date)) %>%
     dplyr::filter(!is.na(Date))
@@ -34,6 +57,7 @@ fetch_data <- memoise::memoise(function(country, division, season) {
   data.table::setnames(data, old = colname_map$cols, new = colname_map$names, skip_absent = T)
   return(data)
 })
+
 
 #' Get the url for a given league and season
 #' @keywords internal
