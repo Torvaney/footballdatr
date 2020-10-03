@@ -38,5 +38,7 @@ alt_country_lookup <- list(
   poland     = "POL",
   romania    = "ROU",
   russia     = "RUS",
-  sweden     = "SWE"
+  sweden     = "SWE",
+  switzerland= "SWZ",
+  usa = "USA"
 )
