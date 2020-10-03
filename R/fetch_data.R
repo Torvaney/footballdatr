@@ -24,12 +24,20 @@
 #'
 #' @export
 fetch_data <- memoise::memoise(function(country, division, season) {
+  #Different column select dependent on year
+  if(season > 1999){
+    colname_map <- colname_map}
+  else if(season > 1994){
+    colname_map <- colname_map[1:10]}
+  else{
+    colname_map <- colname_map[1:7]
+  }
   football_data_url(country_lookup[tolower(country)], division, season) %>%
     readr::read_csv(col_types = col_spec) %>%
     dplyr::select(!!!colname_map) %>%
     dplyr::mutate(date = lubridate::dmy(date)) %>%
-    tidyr::gather("closing_result", "closing_price", closing_h, closing_d, closing_a) %>%
-    tidyr::nest(closing_result, closing_price, .key = "closing_odds")
+    dplyr::filter(!is.na(date))
+
 })
 
 #' Get the url for a given league and season
