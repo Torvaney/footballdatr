@@ -26,9 +26,9 @@ fetch_data <- memoise::memoise(function(country, division, season) {
 #Select which source to read from based on which list the country appears in
 if(tolower(country) %in% names(country_lookup)){
   prime_fetch_data(country, division, season)
-}else {
+}else if(tolower(country) %in% names(alt_country_lookup)){
   alt_fetch_data(country, season)
-}
+} else{ls_countries()}
 })
 
 #' Fetch data for a single league and season from the main list of countries
