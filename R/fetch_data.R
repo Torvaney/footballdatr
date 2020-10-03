@@ -20,18 +20,9 @@
 #' fetch_data("Italy", 1, 2014)
 #'
 #' @importFrom magrittr %>%
-#' @importFrom rlang !!!
 #'
 #' @export
 fetch_data <- memoise::memoise(function(country, division, season) {
-  # #Different column select dependent on year
-  # if(season > 1999){
-  #   colname_map <- colname_map}
-  # else if(season > 1994){
-  #   colname_map <- colname_map[1:10]}
-  # else{
-  #   colname_map <- colname_map[1:7]
-  # }
   data <- football_data_url(country_lookup[tolower(country)], division, season) %>%
    data.table::fread(fill = TRUE) %>%
   #Select columns that exist from data table of options
