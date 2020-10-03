@@ -3,9 +3,7 @@
 ls_countries <- function() {
   glue::glue(
     "Available countries: ",
-    glue::glue_collapse(names(country_lookup), sep = ", "),
-    ", ",
-    glue::glue_collapse(names(alt_country_lookup), sep = ", ")
+    glue::glue_collapse(sort(c(names(country_lookup), names(alt_country_lookup))), sep = ", ")
   )
 }
 
