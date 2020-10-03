@@ -24,20 +24,23 @@
 #'
 #' @export
 fetch_data <- memoise::memoise(function(country, division, season) {
-  #Different column select dependent on year
-  if(season > 1999){
-    colname_map <- colname_map}
-  else if(season > 1994){
-    colname_map <- colname_map[1:10]}
-  else{
-    colname_map <- colname_map[1:7]
-  }
-  football_data_url(country_lookup[tolower(country)], division, season) %>%
-    data.table::fread(fill = TRUE) %>%
-    dplyr::select(!!!colname_map) %>%
-    dplyr::mutate(date = lubridate::dmy(date)) %>%
-    dplyr::filter(!is.na(date))
-
+  # #Different column select dependent on year
+  # if(season > 1999){
+  #   colname_map <- colname_map}
+  # else if(season > 1994){
+  #   colname_map <- colname_map[1:10]}
+  # else{
+  #   colname_map <- colname_map[1:7]
+  # }
+  data <- football_data_url(country_lookup[tolower(country)], division, season) %>%
+   data.table::fread(fill = TRUE) %>%
+  #Select columns that exist from data table of options
+    dplyr::select(tidyselect::any_of(colname_map$cols)) %>%
+    dplyr::mutate(Date = lubridate::dmy(Date)) %>%
+    dplyr::filter(!is.na(Date))
+  #Set names, skipping those that don't exist
+  data.table::setnames(data, old = colname_map$cols, new = colname_map$names, skip_absent = T)
+  return(data)
 })
 
 #' Get the url for a given league and season
@@ -57,31 +60,9 @@ season_code <- function(start_year) {
 #       tidyr::gather and tidyr::separate
 #' Map for selecting and renaming foorball-data.co.uk columns
 #' @keywords internal
-colname_map <- list(
-  competition     = "Div",
-  date            = "Date",
-  home            = "HomeTeam",
-  away            = "AwayTeam",
-  hgoal           = "FTHG",
-  agoal           = "FTAG",
-  result          = "FTR",
-  hgoal_ht        = "HTHG",
-  agoal_ht        = "HTAG",
-  result_ht       = "HTR",
-  referee         = "Referee",
-  hshot           = "HS",
-  ashot           = "AS",
-  hshot_on_target = "HST",
-  ashot_on_target = "AST",
-  hfoul           = "HF",
-  afoul           = "AF",
-  hcorner         = "HC",
-  acorner         = "AC",
-  hyellow         = "HY",
-  ayellow         = "AY",
-  hred            = "HR",
-  ared            = "AR",
-  closing_h       = "PSCH",
-  closing_d       = "PSCD",
-  closing_a       = "PSCA"
-)
+colname_map <- data.table::data.table(cols = c("Div", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG",
+"HTR", "Referee", "HS", "AS", "HST", "AST", "HF", "AF", "HC", "AC", "HY", "AY", "HR", "AR"),
+names = c("competition", "date", "home", "away", "hgoal", "agoal", "result", "hgoal_ht", "agoal_ht", "result_ht",
+          "referee", "hshot", "ashot", "hshot_on_target", "ashot_on_target", "hfoul", "afoul", "hcorner",
+          "acorner", "hyellow", "ayellow", "hred", "ared"
+))
