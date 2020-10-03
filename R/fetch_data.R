@@ -42,7 +42,7 @@ football_data_url <- function(country, division, season) {
 #' @keywords internal
 season_code <- function(start_year) {
   end_year <- start_year + 1
-  glue::glue("{start_year %% 100}{end_year %% 100}")
+  glue::glue("{sprintf('%02d',start_year %% 100)}{sprintf('%02d',end_year %% 100)}")
 }
 
 #' Column specification for football-data.co.uk csv files
