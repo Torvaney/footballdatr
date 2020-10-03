@@ -23,7 +23,8 @@
 #'
 #' @export
 fetch_data <- memoise::memoise(function(country, division, season) {
-  data <- football_data_url(country_lookup[tolower(country)], division, season) %>%
+#Select which source to read from based on which the country appears in
+  data <- football_data_url(country, division, season) %>%
    data.table::fread(fill = TRUE) %>%
   #Select columns that exist from data table of options
     dplyr::select(tidyselect::any_of(colname_map$cols)) %>%
@@ -37,7 +38,7 @@ fetch_data <- memoise::memoise(function(country, division, season) {
 #' Get the url for a given league and season
 #' @keywords internal
 football_data_url <- function(country, division, season) {
-  glue::glue("http://www.football-data.co.uk/mmz4281/{season_code(season)}/{country}{division}.csv")
+  glue::glue("http://www.football-data.co.uk/mmz4281/{season_code(season)}/{country_lookup[tolower(country)]}{division}.csv")
 }
 
 #' Get the football-data.co.uk string for a given season
