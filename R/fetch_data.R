@@ -33,7 +33,7 @@ fetch_data <- memoise::memoise(function(country, division, season) {
     colname_map <- colname_map[1:7]
   }
   football_data_url(country_lookup[tolower(country)], division, season) %>%
-    readr::read_csv(col_types = col_spec) %>%
+    data.table::fread(fill = TRUE) %>%
     dplyr::select(!!!colname_map) %>%
     dplyr::mutate(date = lubridate::dmy(date)) %>%
     dplyr::filter(!is.na(date))
@@ -52,35 +52,6 @@ season_code <- function(start_year) {
   end_year <- start_year + 1
   glue::glue("{sprintf('%02d',start_year %% 100)}{sprintf('%02d',end_year %% 100)}")
 }
-
-#' Column specification for football-data.co.uk csv files
-#' @keywords internal
-col_spec <- readr::cols(
-  .default = readr::col_double(),
-  Div      = readr::col_character(),
-  Date     = readr::col_character(),
-  HomeTeam = readr::col_character(),
-  AwayTeam = readr::col_character(),
-  FTHG     = readr::col_integer(),
-  FTAG     = readr::col_integer(),
-  FTR      = readr::col_character(),
-  HTHG     = readr::col_integer(),
-  HTAG     = readr::col_integer(),
-  HTR      = readr::col_character(),
-  Referee  = readr::col_character(),
-  HS       = readr::col_integer(),
-  AS       = readr::col_integer(),
-  HST      = readr::col_integer(),
-  AST      = readr::col_integer(),
-  HF       = readr::col_integer(),
-  AF       = readr::col_integer(),
-  HC       = readr::col_integer(),
-  AC       = readr::col_integer(),
-  HY       = readr::col_integer(),
-  AY       = readr::col_integer(),
-  HR       = readr::col_integer(),
-  AR       = readr::col_integer()
-)
 
 # TODO: better naming convention for home and away columns - should be easy to use with
 #       tidyr::gather and tidyr::separate
