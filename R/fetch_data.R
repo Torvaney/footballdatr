@@ -48,7 +48,7 @@ if(tolower(country) %in% names(country_lookup)){
 prime_fetch_data <- memoise::memoise(function(country, division, season) {
   #Select which source to read from based on which the country appears in
   data <- football_data_url(country, division, season) %>%
-    data.table::fread(fill = TRUE) %>%
+    read.csv(fill = TRUE, stringsAsFactors = FALSE) %>%
     #Select columns that exist from data table of options
     dplyr::select(tidyselect::any_of(colname_map$cols)) %>%
     dplyr::mutate(Date = lubridate::dmy(Date)) %>%
@@ -76,7 +76,7 @@ season_code <- function(start_year) {
 #       tidyr::gather and tidyr::separate
 #' Map for selecting and renaming foorball-data.co.uk columns
 #' @keywords internal
-colname_map <- data.table::data.table(cols = c("Div", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG",
+colname_map <- tibble::tibble(cols = c("Div", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG",
 "HTR", "Referee", "HS", "AS", "HST", "AST", "HF", "AF", "HC", "AC", "HY", "AY", "HR", "AR"),
 names = c("competition", "date", "home", "away", "hgoal", "agoal", "result", "hgoal_ht", "agoal_ht", "result_ht",
           "referee", "hshot", "ashot", "hshot_on_target", "ashot_on_target", "hfoul", "afoul", "hcorner",

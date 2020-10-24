@@ -39,5 +39,5 @@ alt_season_code <- function(start_year) {
 
 #' Map for selecting and renaming football-data.co.uk columns
 #' @keywords internal
-alt_colname_map <- data.table::data.table(cols = c("League", "Date", "Home", "Away", "HG", "AG", "Res"),
+alt_colname_map <- tibble::tibble(cols = c("League", "Date", "Home", "Away", "HG", "AG", "Res"),
                                       names = c("competition", "date", "home", "away", "hgoal", "agoal", "result"))
