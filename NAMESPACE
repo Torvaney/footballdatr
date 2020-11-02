@@ -3,4 +3,3 @@
 export(fetch_data)
 export(ls_countries)
 importFrom(magrittr,"%>%")
-importFrom(rlang,"!!!")

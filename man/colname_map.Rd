@@ -5,7 +5,7 @@
 \alias{colname_map}
 \title{Map for selecting and renaming foorball-data.co.uk columns}
 \format{
-An object of class \code{list} of length 26.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 23 rows and 2 columns.
 }
 \usage{
 colname_map
