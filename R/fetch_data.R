@@ -40,9 +40,15 @@ football_data_url <- function(country, division, season) {
 
 #' Get the football-data.co.uk string for a given season
 #' @keywords internal
+year_short_name <- function(year) {
+  substr(year, nchar(year)-1, nchar(year))
+}
+
+#' Get the football-data.co.uk string for a given season
+#' @keywords internal
 season_code <- function(start_year) {
   end_year <- start_year + 1
-  glue::glue("{start_year %% 100}{end_year %% 100}")
+  glue::glue("{year_short_name(start_year)}{year_short_name(end_year)}")
 }
 
 #' Column specification for football-data.co.uk csv files
