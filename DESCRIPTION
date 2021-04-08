@@ -22,7 +22,8 @@ Imports:
     tidyr,
     rlang,
     memoise,
-    lubridate
+    lubridate,
+    purrr
 Remotes:
     r-lib/memoise
 RoxygenNote: 7.1.0

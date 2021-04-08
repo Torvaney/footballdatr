@@ -26,6 +26,7 @@
 fetch_data <- memoise::memoise(function(country, division, season) {
   football_data_url(country_lookup[tolower(country)], division, season) %>%
     readr::read_csv(col_types = col_spec) %>%
+    add_if_missing(PSCH, PSCD, PSCA) %>%
     dplyr::select(!!!colname_map) %>%
     dplyr::mutate(date = lubridate::dmy(date)) %>%
     tidyr::gather("closing_result", "closing_price", closing_h, closing_d, closing_a) %>%
@@ -38,7 +39,6 @@ football_data_url <- function(country, division, season) {
   glue::glue("http://www.football-data.co.uk/mmz4281/{season_code(season)}/{country}{division}.csv")
 }
 
-#' Get the football-data.co.uk string for a given season
 #' @keywords internal
 year_short_name <- function(year) {
   substr(year, nchar(year)-1, nchar(year))
@@ -49,6 +49,16 @@ year_short_name <- function(year) {
 season_code <- function(start_year) {
   end_year <- start_year + 1
   glue::glue("{year_short_name(start_year)}{year_short_name(end_year)}")
+}
+
+#' @keywords internal
+add_if_missing <- function(tbl, ...) {
+  purrr::reduce(rlang::enquos(...), function(df, col) {
+    if (rlang::quo_text(col) %in% colnames(df)) {
+      return(df)
+    }
+    dplyr::mutate(df, !!col := NA)
+  }, .init = tbl)
 }
 
 #' Column specification for football-data.co.uk csv files
