@@ -26,7 +26,7 @@
 fetch_data <- memoise::memoise(function(country, division, season) {
   football_data_url(country_lookup[tolower(country)], division, season) %>%
     readr::read_csv(col_types = col_spec) %>%
-    add_if_missing(PSCH, PSCD, PSCA) %>%
+    add_if_missing(as.character(colname_map)) %>%
     dplyr::select(!!!colname_map) %>%
     dplyr::mutate(date = lubridate::dmy(date)) %>%
     tidyr::gather("closing_result", "closing_price", closing_h, closing_d, closing_a) %>%
@@ -52,9 +52,9 @@ season_code <- function(start_year) {
 }
 
 #' @keywords internal
-add_if_missing <- function(tbl, ...) {
-  purrr::reduce(rlang::enquos(...), function(df, col) {
-    if (rlang::quo_text(col) %in% colnames(df)) {
+add_if_missing <- function(tbl, cols) {
+  purrr::reduce(cols, function(df, col) {
+    if (col %in% colnames(df)) {
       return(df)
     }
     dplyr::mutate(df, !!col := NA)
